@@ -32,9 +32,10 @@ public class ExplodingChickenCapability implements IExplodingChickenCapability
     }
 
     @Override
-    public float getExplosionChance()
+    public float getExplosionChance(int itemsConsumed)
     {
-        return (float)Math.pow(0.08 * _itemsConsumed, 2);
+        return (float)(0.0172 * Math.pow(itemsConsumed, 2));
+        //return (float)Math.pow(0.08 * _itemsConsumed, 2);
         //return (_itemsConsumed / 16.0f);
     }
 

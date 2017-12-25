@@ -26,22 +26,29 @@ public class InteractionEvent
 		if (!chicken.isBreedingItem(event.getItemStack())) return;
 
 		final IExplodingChickenCapability capability = chicken.getCapability(Reference.EXPLODING_CHICKEN, null);
-		if (capability != null) {
-			capability.incrementItemsConsumed();
-			ChickenRoulette.CHANNEL.sendToAll(new ChickenFedMessage(chicken));
-		}
+		if (capability != null)
+		{
+			final int itemsConsumed = capability.getItemsConsumed();
+			if (itemsConsumed ==5) return;
 
-		final World world = event.getWorld();
-		final double randomValue = world.rand.nextDouble();
-		final float explosionChance = capability.getExplosionChance();
+			final World world = event.getWorld();
+			final double randomValue = world.rand.nextDouble();
+			final float explosionChance = capability.getExplosionChance(itemsConsumed + 1);
 
-		if (randomValue < explosionChance) {
-			Logger.info("boom - %f/%f", randomValue, explosionChance);
-			chicken.setDead();
-			world.createExplosion(null, target.posX, target.posY, target.posZ, capability.getItemsConsumed(), true);
+			if (randomValue < explosionChance)
+			{
+				Logger.info("boom - %d - %f/%f", itemsConsumed,randomValue, explosionChance);
+				chicken.setDead();
+				world.createExplosion(null, target.posX, target.posY, target.posZ, itemsConsumed, true);
 
-		} else {
-			Logger.info("Click - %f/%f", randomValue, explosionChance);
+			} else
+			{
+				Logger.info("Click - %d - %f/%f", itemsConsumed, randomValue, explosionChance);
+				capability.incrementItemsConsumed();
+				ChickenRoulette.CHANNEL.sendToAll(new ChickenFedMessage(chicken));
+			}
+
+
 		}
 
 	}

@@ -47,17 +47,22 @@ public class RenderDangerChicken extends RenderLiving<EntityChicken>
 		final IExplodingChickenCapability capability = entitylivingbaseIn.getCapability(Reference.EXPLODING_CHICKEN, null);
 		float scaleY = -1.0f;
 		float scaleX = -1.0f;
+		float scaleZ = 1.0f;
 		if (capability != null) {
 			final int itemsConsumed = capability.getItemsConsumed();
 			if (itemsConsumed > 0)
 			{
-				scaleY -= (1 - (1.0f / itemsConsumed));
-				scaleX -= (1 - (1.0f / itemsConsumed));
+				//scaleY -= (1 - (1.0f / itemsConsumed));
+				//scaleX -= (1 - (1.0f / itemsConsumed));
+				final double growthFactor = Math.pow(itemsConsumed, 1.004) * .2;
+				scaleX -= growthFactor;
+				scaleY -= growthFactor * 0.6;
+				scaleZ += growthFactor;
 			}
 		}
 
 		GlStateManager.enableRescaleNormal();
-		GlStateManager.scale(scaleX, scaleY, 1.0F);
+		GlStateManager.scale(scaleX, scaleY, scaleZ);
 		preRenderCallback(entitylivingbaseIn, partialTicks);
 		float f = 0.0625F;
 		GlStateManager.translate(0.0F, -1.501F, 0.0F);

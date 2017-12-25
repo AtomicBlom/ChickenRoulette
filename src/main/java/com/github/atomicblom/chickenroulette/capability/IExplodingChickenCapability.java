@@ -1,8 +1,6 @@
 package com.github.atomicblom.chickenroulette.capability;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
@@ -11,6 +9,6 @@ public interface IExplodingChickenCapability
 {
     int getItemsConsumed();
     void incrementItemsConsumed();
-    float getExplosionChance();
+    float getExplosionChance(int itemsConsumed);
     void setItemsConsumed(int itemsConsumed);
 }
