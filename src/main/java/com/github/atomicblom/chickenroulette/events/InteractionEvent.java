@@ -1,6 +1,7 @@
 package com.github.atomicblom.chickenroulette.events;
 
 import com.github.atomicblom.chickenroulette.ChickenRoulette;
+import com.github.atomicblom.chickenroulette.ChickenRouletteConfiguration;
 import com.github.atomicblom.chickenroulette.Logger;
 import com.github.atomicblom.chickenroulette.Reference;
 import com.github.atomicblom.chickenroulette.capability.IExplodingChickenCapability;
@@ -28,27 +29,25 @@ public class InteractionEvent
 		final IExplodingChickenCapability capability = chicken.getCapability(Reference.EXPLODING_CHICKEN, null);
 		if (capability != null)
 		{
-			final int itemsConsumed = capability.getItemsConsumed();
-			if (itemsConsumed ==5) return;
+			int itemsConsumed = capability.getItemsConsumed();
+			if (itemsConsumed == 5 && ChickenRouletteConfiguration.safetyNet) return;
 
 			final World world = event.getWorld();
 			final double randomValue = world.rand.nextDouble();
-			final float explosionChance = capability.getExplosionChance(itemsConsumed + 1);
+			final float explosionChance = ChickenRoulette.getExplosionChance(itemsConsumed + 1);
 
 			if (randomValue < explosionChance)
 			{
-				Logger.info("boom - %d - %f/%f", itemsConsumed,randomValue, explosionChance);
 				chicken.setDead();
 				world.createExplosion(null, target.posX, target.posY, target.posZ, itemsConsumed, true);
+				Logger.info("boom - %d - %f/%f", itemsConsumed,randomValue, explosionChance);
 
 			} else
 			{
-				Logger.info("Click - %d - %f/%f", itemsConsumed, randomValue, explosionChance);
-				capability.incrementItemsConsumed();
+				itemsConsumed = capability.incrementItemsConsumed();
 				ChickenRoulette.CHANNEL.sendToAll(new ChickenFedMessage(chicken));
+				Logger.info("Click - %d - %f/%f", itemsConsumed, randomValue, explosionChance);
 			}
-
-
 		}
 
 	}

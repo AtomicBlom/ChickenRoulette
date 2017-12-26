@@ -8,7 +8,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public interface IExplodingChickenCapability
 {
     int getItemsConsumed();
-    void incrementItemsConsumed();
-    float getExplosionChance(int itemsConsumed);
+    int incrementItemsConsumed();
     void setItemsConsumed(int itemsConsumed);
 }

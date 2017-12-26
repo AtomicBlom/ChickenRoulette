@@ -1,15 +1,15 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "chickenroulette",
+  "name": "Chicken Roulette",
+  "description": "Will you risk it?",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "http://github.com/AtomicBlom/ChickenRoulette",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
-  "logoFile": "",
+  "authorList": ["AtomicBlom"],
+  "credits": "Wyld for the idea, iChun for giving me the chance to do it.",
+  "logoFile": "assets/chickenroulette/Logo2.png",
   "screenshots": [],
   "dependencies": []
 }

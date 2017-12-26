@@ -35,4 +35,15 @@ public class ChickenRoulette
         // some example code
         MinecraftForge.EVENT_BUS.post(new RegisterChickenRendererEvent());
     }
+
+    public static float getExplosionChance(int itemsConsumed)
+    {
+        if (ChickenRouletteConfiguration.explosionAlgorithm == ExplosionAlgorithm.LINEAR)
+        {
+            //94.9475% chance of it exploding before getting to "Unbelievable" size
+            return 0.98f / 2.0f;
+        } else {
+            return (float)(0.037 * Math.pow(itemsConsumed, 2));
+        }
+    }
 }
